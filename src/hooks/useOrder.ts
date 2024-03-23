@@ -2,13 +2,7 @@ import { useState } from "react";
 import type { MenuItem, OrderItem } from "../types";
 
 export default function useOrder() {
-  // Esto es un Generic, sirve para hacerle saber
-  // el tipo de dato, pero no es necesario pasarlo
-  // en el caso de que le pasemos un dato, ya que
-  // seria redundante y al pasarle el dato automaticamente
-  // entiende el tipo de dato. En este caso si lo ponemos
-  // ya que hacemos uso de un dato muy complejo como lo
-  // es OrderItem.
+  // (<OrderItem[]>) -> Esto es un Generic.
   const [order, setOrder] = useState<OrderItem[]>([]);
 
   const addItem = (item: MenuItem) => {
@@ -30,9 +24,14 @@ export default function useOrder() {
     setOrder([...order, newItem]);
   };
 
-  console.log(order);
+  const removeItem = (id: MenuItem["id"]) => {
+    const updatedOrder = order.filter((item) => item.id !== id);
+    setOrder(updatedOrder);
+  };
 
   return {
+    order,
     addItem,
+    removeItem,
   };
 }
