@@ -18,25 +18,27 @@ const tipOptions = [
 
 type TipPercentageFormTypes = {
   setTip: React.Dispatch<React.SetStateAction<number>>;
+  tip: number;
 };
 
-export const TipPercentageForm = ({ setTip }: TipPercentageFormTypes) => {
+export const TipPercentageForm = ({ setTip, tip }: TipPercentageFormTypes) => {
   return (
     <div>
       <h3 className="text-2xl font-black">Propina</h3>
 
       <form>
-        {tipOptions.map((tip) => (
-          <div className="flex gap-2" key={tip.id}>
-            <label htmlFor="tip">{tip.label}</label>
-            <input 
-              type="radio" 
-              name="tip" 
-              id={tip.id}
-              value={tip.value} 
-              // Este signo de más lo convierte en un number, 
+        {tipOptions.map((tipOption) => (
+          <div className="flex gap-2" key={tipOption.id}>
+            <label htmlFor="tip">{tipOption.label}</label>
+            <input
+              type="radio"
+              name="tip"
+              id={tipOption.id}
+              value={tipOption.value}
+              // Este signo de más lo convierte en un number,
               // por eso corrige el error...
               onChange={(e) => setTip(+e.target.value)}
+              checked={tipOption.value === tip}
             />
           </div>
         ))}

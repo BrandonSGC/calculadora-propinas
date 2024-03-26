@@ -4,12 +4,19 @@ import { OrderItem } from "../types";
 type OrderTotalsProps = {
   order: OrderItem[],
   tip: number,
+  placeOrder: () => void
 };
 
-export const OrderTotals = ( { order, tip }: OrderTotalsProps ) => {
-  const subtotalAmmount = useMemo( () => order.reduce((total, item) => total + item.quantity * item.price, 0), [order] );
-  const tipAmmount = useMemo( () => subtotalAmmount * tip, [tip, order] );
-  const totalAmmount = useMemo( () => subtotalAmmount + tipAmmount, [tip, order] );
+export const OrderTotals = ({ order, tip, placeOrder }: OrderTotalsProps) => {
+  const subtotalAmmount = useMemo(
+    () => order.reduce((total, item) => total + item.quantity * item.price, 0),
+    [order]
+  );
+  const tipAmmount = useMemo(() => subtotalAmmount * tip, [tip, order]);
+  const totalAmmount = useMemo(
+    () => subtotalAmmount + tipAmmount,
+    [tip, order]
+  );
 
   return (
     <>
@@ -32,7 +39,13 @@ export const OrderTotals = ( { order, tip }: OrderTotalsProps ) => {
         </p>
       </div>
 
-      <button></button>
+      <button
+        className="w-full p-3 mt-10 font-bold text-white uppercase bg-black disabled:opacity-10"
+        disabled={order.length === 0}
+        onClick={placeOrder}
+      >
+        Guardar Orden
+      </button>
     </>
   );
 };
